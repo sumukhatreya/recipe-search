@@ -1,7 +1,6 @@
 import { useFormik } from 'formik';
-import { useEffect } from 'react';
 
-export default function Filters() {
+export default function Filters({ applyFilters }) {
   const formik = useFormik({
     initialValues: {
       minCalories: 0,
@@ -10,7 +9,14 @@ export default function Filters() {
       checked: [],
     },
     onSubmit: async (values) => {
-      console.log(JSON.stringify(values));
+      let dietFilter = '';
+      for (let elem of values.checked) {
+        dietFilter += `diet=${elem}&`;
+      }
+      dietFilter = dietFilter.slice(0, -1);
+      let filters = `ingr=0-${values.maxIngredients}&calories=${values.minCalories}-${values.maxCalories}&${dietFilter}`;
+      console.log(filters);
+      applyFilters(filters);
     },
   });
   return (
@@ -83,7 +89,7 @@ export default function Filters() {
               <input
                 className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
                 type='checkbox'
-                value='highProt'
+                value='high-protein'
                 id='highProtein'
                 name='checked'
                 onChange={formik.handleChange}
@@ -99,7 +105,7 @@ export default function Filters() {
               <input
                 className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
                 type='checkbox'
-                value='highFib'
+                value='high-fiber'
                 id='highFiber'
                 name='checked'
                 onChange={formik.handleChange}
@@ -108,15 +114,15 @@ export default function Filters() {
             <div className='block'>
               <label
                 className='form-check-label inline-block text-sm text-gray-700'
-                htmlFor='vegan'
+                htmlFor='balanced'
               >
-                Vegan
+                Balanced
               </label>
               <input
                 className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
                 type='checkbox'
-                value='vegan'
-                id='vegan'
+                value='balanced'
+                id='balanced'
                 name='checked'
                 onChange={formik.handleChange}
               />
@@ -124,15 +130,15 @@ export default function Filters() {
             <div className='block'>
               <label
                 className='form-check-label inline-block text-sm text-gray-700'
-                htmlFor='paleo'
+                htmlFor='lowCarb'
               >
-                Paleo
+                Low carb
               </label>
               <input
                 className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
                 type='checkbox'
-                value='paleo'
-                id='paleo'
+                value='low-carb'
+                id='lowCarb'
                 name='checked'
                 onChange={formik.handleChange}
               />
