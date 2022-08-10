@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Filters from './filters';
 
 const FilterIcon = () => {
@@ -8,7 +9,7 @@ const FilterIcon = () => {
         className='h-5 w-5'
         viewBox='0 0 20 20'
         fill='currentColor'
-        zIndex={40}
+        zindex={40}
       >
         <path
           fillRule='evenodd'
@@ -21,24 +22,29 @@ const FilterIcon = () => {
 };
 
 export default function SearchBar() {
+  const [showMenu, setShowMenu] = useState(false);
+  const toggleFilterMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
     <div>
-      <div class='relative flex justify-center py-3 px-6 bg-slate-200 border-b'>
-        <div class='m-auto border rounded-md overflow-visible h-10'>
-          <input placeholder='Search...' class='px-8 py-3 h-full' />
-          <button class='float-left bg-slate-300 px-2 h-full hover:bg-slate-500 z-40'>
+      <div className='relative flex justify-center py-3 px-6 bg-slate-200 border-b'>
+        <div className='m-auto border rounded-md overflow-visible h-10'>
+          <input placeholder='Search...' className='px-11 py-3 h-full' />
+          <button
+            className='float-left bg-slate-300 px-2 h-full hover:bg-slate-500 z-30'
+            onClick={toggleFilterMenu}
+          >
             <FilterIcon />
           </button>
-          <div class='float-bottom'>
-            <Filters />
-          </div>
+          {showMenu && (
+            <div className='float-bottom z-40'>
+              <Filters />
+            </div>
+          )}
         </div>
       </div>
-      {/* <div class='relative m-auto flex justify-center'>
-        <div class='mr-auto mb-auto ml-auto mt-0 h-full'>
-          <Filters />
-        </div>
-      </div> */}
     </div>
   );
 }

@@ -1,49 +1,151 @@
+import { useFormik } from 'formik';
+import { useEffect } from 'react';
+
 export default function Filters() {
+  const formik = useFormik({
+    initialValues: {
+      minCalories: 0,
+      maxCalories: 10000,
+      maxIngredients: 100,
+      checked: [],
+    },
+    onSubmit: async (values) => {
+      console.log(JSON.stringify(values));
+    },
+  });
   return (
-    <div class='w-full max-w-xs'>
-      <form class='bg-slate-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'>
-        <div class='mb-4'>
+    <div className='w-full max-w-xs'>
+      <form
+        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'
+        onSubmit={formik.handleSubmit}
+      >
+        <div className='mb-6'>
+          <h3 className='text-base font-bold block mb-2'>Calories</h3>
           <label
-            class='block text-gray-700 text-sm font-bold mb-2'
-            for='username'
+            className='inline-block text-gray-700 text-sm m-auto'
+            htmlFor='minCalories'
           >
-            Username
+            Min
           </label>
           <input
-            class='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            id='username'
+            className='inline-block appearance-none border rounded w-1/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2.5 mr-3'
+            id='minCalories'
+            name='minCalories'
+            value={formik.values.minCalories}
+            onChange={formik.handleChange}
             type='text'
-            placeholder='Username'
+            placeholder={formik.values.minCalories}
           />
-        </div>
-        <div class='mb-6'>
           <label
-            class='block text-gray-700 text-sm font-bold mb-2'
-            for='password'
+            className='inline-block text-gray-700 text-sm m-auto'
+            htmlFor='maxCalories'
           >
-            Password
+            Max
           </label>
           <input
-            class='shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
-            id='password'
-            type='password'
-            placeholder='******************'
+            className='inline-block appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2.5'
+            id='maxCalories'
+            name='maxCalories'
+            value={formik.values.maxCalories}
+            onChange={formik.handleChange}
+            type='text'
+            placeholder={formik.values.maxCalories}
           />
-          <p class='text-red-500 text-xs italic'>Please choose a password.</p>
         </div>
-        <div class='flex items-center justify-between'>
+        <div className='mb-6'>
+          <h3 className='text-base font-bold block mb-2'>Ingredients</h3>
+          <label
+            className='inline-block text-gray-700 text-sm m-auto'
+            htmlFor='maxIngredients'
+          >
+            Max
+          </label>
+          <input
+            className='inline-block appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2.5'
+            id='maxIngredients'
+            name='maxIngredients'
+            value={formik.values.maxIngredients}
+            onChange={formik.handleChange}
+            type='text'
+            placeholder={formik.values.maxIngredients}
+          />
+        </div>
+        <div>
+          <div className='form-check'>
+            <h3 className='text-base font-bold block mb-2'>Diet</h3>
+            <div className='block'>
+              <label
+                className='form-check-label inline-block text-sm text-gray-700'
+                htmlFor='highProtein'
+              >
+                High protein
+              </label>
+              <input
+                className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
+                type='checkbox'
+                value='highProt'
+                id='highProtein'
+                name='checked'
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className='block'>
+              <label
+                className='form-check-label inline-block text-sm text-gray-700'
+                htmlFor='highFiber'
+              >
+                High fiber
+              </label>
+              <input
+                className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
+                type='checkbox'
+                value='highFib'
+                id='highFiber'
+                name='checked'
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className='block'>
+              <label
+                className='form-check-label inline-block text-sm text-gray-700'
+                htmlFor='vegan'
+              >
+                Vegan
+              </label>
+              <input
+                className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
+                type='checkbox'
+                value='vegan'
+                id='vegan'
+                name='checked'
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className='block'>
+              <label
+                className='form-check-label inline-block text-sm text-gray-700'
+                htmlFor='paleo'
+              >
+                Paleo
+              </label>
+              <input
+                className='form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
+                type='checkbox'
+                value='paleo'
+                id='paleo'
+                name='checked'
+                onChange={formik.handleChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className='flex inline-block mt-4 content-center z-50'>
           <button
-            class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            type='button'
+            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline'
+            type='submit'
           >
-            Sign In
+            Apply
           </button>
-          <a
-            class='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'
-            href='#'
-          >
-            Forgot Password?
-          </a>
         </div>
       </form>
     </div>
